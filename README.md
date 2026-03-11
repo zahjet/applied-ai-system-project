@@ -26,12 +26,16 @@ It wrote the code, ran away, and now the game is unplayable.
 ## 📝 Document Your Experience
 
 - [ ] Describe the game's purpose.
+A game where you guess a # and are told if the actual # is higher or lower
 - [ ] Detail which bugs you found.
+The game had several logic bugs in app.py: the attempt counter initialized to 1 instead of 0 (costing players one guess on the first game), the hint message and New Game button hardcoded the range as 1–100 regardless of difficulty, and the Hard difficulty range was set to 1–50 — actually easier than Normal's 1–100. The check_guess function in the original app.py had a broken fallback that compared guesses as strings when secret was cast to a string on even-numbered attempts, which reversed the high/low hints and could produce wrong results. Finally, update_score awarded +5 points for a "Too High" guess on even-numbered attempts instead of always deducting 5, and the game never reset status back to "playing" when starting a new game, so the game would get permanently stuck after a win or loss.
 - [ ] Explain what fixes you applied.
+The game logic functions (check_guess, parse_guess, update_score) were moved from app.py into logic_utils.py, and several bugs were fixed: the attempt counter was off by one (started at 1 instead of 0), the secret number was sometimes cast to a string which reversed the high/low hints, the Hard difficulty range was easier than Normal (1–50 vs 1–100), the hint message and New Game button ignored the selected difficulty range, and update_score incorrectly awarded +5 points for wrong guesses on even attempts. Pytest tests were also added to tests/test_game_logic.py to verify each of these fixes.
 
 ## 📸 Demo
 
 - [ ] [Insert a screenshot of your fixed, winning game here]
+![alt text](image.png)
 
 ## 🚀 Stretch Features
 
