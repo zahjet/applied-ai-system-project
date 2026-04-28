@@ -3,7 +3,7 @@ def update_score(current_score: int, outcome: str, attempt_number: int):
         points = 100 - 10 * (attempt_number + 1)
         if points < 10:
             points = 10
-        return current_score + points
+        return current_score - points
 
     if outcome == "Too High":
         return current_score - 5
